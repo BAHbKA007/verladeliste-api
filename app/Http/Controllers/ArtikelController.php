@@ -29,7 +29,13 @@ class ArtikelController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $artikel = $request->isMethod('put') ? Artikel::findOrFail($request->id) : new Artikel;
+
+        $artikel->name = $request->input('name');
+
+        if ($artikel->save()) {
+            return new ArtikelResource($artikel);
+        }
     }
 
     /**
@@ -52,6 +58,10 @@ class ArtikelController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $artikel = Artikel::findOrFail($id);
+
+        if ($artikel->delete()) {
+            return new ArtikelResource($artikel);
+        }
     }
 }
