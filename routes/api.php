@@ -50,3 +50,14 @@ Route::post('gebinde', 'GebindeController@store');
 Route::put('gebinde', 'GebindeController@store');
 // Lösche Gebinde
 Route::delete('gebinde/{id}', 'GebindeController@destroy');
+
+// We Liste
+Route::get('we', 'WeController@index');
+// einzelner We
+Route::get('we/{id}', 'WeController@show');
+// Neuen We anlegen
+Route::post('we', 'WeController@store');
+// Update We
+Route::put('we', 'WeController@store');
+// Lösche We
+Route::delete('we/{id}', 'WeController@destroy');
