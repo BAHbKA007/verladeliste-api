@@ -25,8 +25,8 @@ class CreateWeTable extends Migration
             $table->date('ankunft');
             $table->date('verladung');
             $table->integer('lkw')->nullable();
-            $table->integer('we_nr')->nullable();
-            $table->integer('ls_nr')->nullable();
+            $table->string('we_nr')->nullable()->default('');
+            $table->string('ls_nr')->nullable()->default('');
             $table->timestamps();
         });
     }

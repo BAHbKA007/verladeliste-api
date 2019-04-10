@@ -25,7 +25,6 @@ class We extends JsonResource
             'entladung' => $this->entladung,
             'ankunft' => $this->ankunft,
             'verladung' => $this->verladung,
-            'lkw' => $this->lkw,
             'we_nr' => $this->we_nr,
             'ls_nr' => $this->ls_nr
         ];    

@@ -31,7 +31,17 @@ class WeController extends Controller
     {
         $We = $request->isMethod('put') ? We::findOrFail($request->id) : new We;
 
-        $We->name = $request->input('name');
+        $We->produkt = $request->input('produkt');
+        $We->gebinde = $request->input('gebinde');
+        $We->menge = $request->input('menge');
+        $We->lieferant = $request->input('lieferant');
+        $We->paletten = $request->input('paletten');
+        $We->preis = $request->input('preis');
+        $We->verladung = $request->input('verladung');
+        $We->ankunft = $request->input('ankunft');
+        $We->entladung = $request->input('entladung');
+        $We->we_nr = $request->input('we_nr');
+        $We->ls_nr = $request->input('ls_nr');
 
         if ($We->save()) {
             return new WeResource($We);
