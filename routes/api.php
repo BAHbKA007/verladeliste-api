@@ -61,3 +61,17 @@ Route::post('we', 'WeController@store');
 Route::put('we', 'WeController@store');
 // Lösche We
 Route::delete('we/{id}', 'WeController@destroy');
+
+// Lieferant Liste
+Route::get('lieferant', 'LieferantController@index');
+// einzelner Lieferant
+Route::get('lieferant/{id}', 'LieferantController@show');
+// Neuen Lieferant anlegen
+Route::post('lieferant', 'LieferantController@store');
+// Update Lieferant
+Route::put('lieferant', 'LieferantController@store');
+// Lösche Lieferant
+Route::delete('lieferant/{id}', 'LieferantController@destroy');
+
+// Länder Liste
+Route::get('land', 'LandController@index');

@@ -2,7 +2,7 @@
 
 use Illuminate\Database\Seeder;
 
-class ArtikelTableSeeder extends Seeder
+class LieferantsTableSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -12,7 +12,7 @@ class ArtikelTableSeeder extends Seeder
     public function run()
     {
         //path to sql file
-        $sql = base_path('database/seeds/artikel.sql');
+        $sql = base_path('database/seeds/lieferant.sql');
 
         //collect contents and pass to DB::unprepared
         DB::unprepared(file_get_contents($sql));
