@@ -61,6 +61,8 @@ Route::post('we', 'WeController@store');
 Route::put('we', 'WeController@store');
 // Lösche We
 Route::delete('we/{id}', 'WeController@destroy');
+// We Land
+Route::post('we/where/land', 'WeController@where_land');
 
 // Lieferant Liste
 Route::get('lieferant', 'LieferantController@index');
@@ -77,12 +79,14 @@ Route::delete('lieferant/{id}', 'LieferantController@destroy');
 Route::get('land', 'LandController@index');
 
 // LKW Liste
-Route::get('lkw', 'LKWController@index');
+Route::get('lkw', 'LkwController@index');
 // einzelner LKW
-Route::get('lkw/{id}', 'LKWController@show');
+Route::get('lkw/{id}', 'LkwController@show');
 // Neuen LKW anlegen
-Route::post('lkw', 'LKWController@store');
+Route::post('lkw', 'LkwController@store');
 // Update LKW
-Route::put('lkw', 'LKWController@store');
+Route::put('lkw', 'LkwController@lkw_edit');
 // Lösche LKW
-Route::delete('lkw/{id}', 'LKWController@destroy');
+Route::delete('lkw/{id}', 'LkwController@destroy');
+// LKW WHERE
+Route::post('lkw/where', 'LkwController@where');

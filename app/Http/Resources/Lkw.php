@@ -20,7 +20,8 @@ class Lkw extends JsonResource
             'frachtkosten' => $this->frachtkosten,
             'ankunft' => $this->ankunft,
             'wes' => We::collection($this->we),
-            'spedition' => $this->spedition
+            'spedition' => $this->spedition,
+            'kommentar' => $this->kommentar
         ];
     }
 }

@@ -81,6 +81,11 @@ class WeController extends Controller
     }
 
 
+    public function where_land(Request $request)
+    {
+        return WeResource::collection(We::whereNull('lkw_id')->whereIn('id', $request)->paginate(100));
+    }
+
     /**
      * Remove the specified resource from storage.
      *
