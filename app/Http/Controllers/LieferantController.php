@@ -16,7 +16,6 @@ class LieferantController extends Controller
      */
     public function index()
     {
-
         return LieferantResource::collection(Lieferant::orderBy('name', 'ASC')->get());
     }
 

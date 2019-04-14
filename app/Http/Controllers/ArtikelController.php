@@ -17,7 +17,7 @@ class ArtikelController extends Controller
     public function index()
     {
 
-        return ArtikelResource::collection(Artikel::orderBy('name', 'ASC')->get());
+        return ArtikelResource::collection(Artikel::get());
     }
 
 

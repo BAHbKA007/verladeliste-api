@@ -47,7 +47,7 @@ INSERT INTO `artikels` (`id`, `name`) VALUES
 (46, 'BIO Orangen 5 x 1kg'),
 (47, 'Bio Paprika 10x400g'),
 (48, 'Bio Paprika 10x400g rot/gelb'),
-(49, 'Bio Paprika 10x400g rot/grÃ¼n'),
+(49, 'Bio Paprika 10x400g rot/grün'),
 (50, 'Bio Paprika 10x400g rot/rot'),
 (51, 'Bio Paprika 6x400g'),
 (52, 'Bio Paprika 6x400g rot/rot'),

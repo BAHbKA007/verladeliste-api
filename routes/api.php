@@ -75,3 +75,14 @@ Route::delete('lieferant/{id}', 'LieferantController@destroy');
 
 // Länder Liste
 Route::get('land', 'LandController@index');
+
+// LKW Liste
+Route::get('lkw', 'LKWController@index');
+// einzelner LKW
+Route::get('lkw/{id}', 'LKWController@show');
+// Neuen LKW anlegen
+Route::post('lkw', 'LKWController@store');
+// Update LKW
+Route::put('lkw', 'LKWController@store');
+// Lösche LKW
+Route::delete('lkw/{id}', 'LKWController@destroy');

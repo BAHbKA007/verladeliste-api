@@ -24,10 +24,14 @@ class CreateWeTable extends Migration
             $table->string('entladung');
             $table->date('ankunft');
             $table->date('verladung');
-            $table->integer('lkw')->nullable();
+            $table->unsignedBigInteger('lkw_id')->nullable();
             $table->string('we_nr')->nullable()->default('');
             $table->string('ls_nr')->nullable()->default('');
             $table->timestamps();
+
+            $table->foreign('lkw_id')
+                    ->references('id')->on('lkws')
+                    ->onDelete('SET NULL');
         });
     }
 
