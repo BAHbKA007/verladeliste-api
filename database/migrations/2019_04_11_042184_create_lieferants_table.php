@@ -19,7 +19,12 @@ class CreateLieferantsTable extends Migration
             $table->integer('nummer');
             $table->string('land', 3)->nullable();
             $table->decimal('rabatt', 4, 2)->nullable()->default(0);
+            $table->unsignedBigInteger('land_id')->nullable();
             $table->timestamps();
+
+            $table->foreign('land_id')
+                ->references('id')->on('lands')
+                ->onDelete('SET NULL');
         });
     }
 

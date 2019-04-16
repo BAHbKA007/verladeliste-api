@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Resources;
+use App\Land;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -19,8 +20,11 @@ class Lieferant extends JsonResource
             'id' => $this->id,
             'name' => $this->name,
             'nummer' => $this->nummer,
-            'land' => $this->land,
-            'rabatt' => $this->rabatt
+            'rabatt' => $this->rabatt,
+            'land' => [
+                'land_id' => $this->land_id,
+                'land_name' => Land::select('lands.name')->where('id', $this->land_id)->pluck('name')[0]
+            ]
         ];
     }
 }

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Lieferant;
+use App\Land;
 use App\Http\Resources\Lieferant as LieferantResource;
 use App\Http\Requests;
 
@@ -16,7 +17,7 @@ class LieferantController extends Controller
      */
     public function index()
     {
-        return LieferantResource::collection(Lieferant::orderBy('name', 'ASC')->get());
+        return LieferantResource::collection(Lieferant::leftJoin('lands', 'lieferants.land_id', '=', 'lands.id')->select('lieferants.*', 'lands.id as landId', 'lands.name as landName')->get());
     }
 
 
@@ -31,7 +32,8 @@ class LieferantController extends Controller
         $Lieferant = $request->isMethod('put') ? Lieferant::findOrFail($request->id) : new Lieferant;
         
         $Lieferant->name = $request->input('name');
-        $Lieferant->land = $request->input('land');
+        //$Lieferant->land_id = Land::where('name', $request->input('land'))->first()->id; // Land wandeln zu ID
+        $Lieferant->land_id = $request->input('land');
         $Lieferant->nummer = $request->input('nummer');
         $Lieferant->rabatt = $request->input('rabatt');
 
@@ -42,24 +44,6 @@ class LieferantController extends Controller
         }
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function destroy($id)
     {
         $Lieferant = Lieferant::findOrFail($id);

@@ -19,7 +19,7 @@ class CreateWeTable extends Migration
             $table->string('gebinde')->nullable();
             $table->decimal('paletten', 8, 2)->nullable();
             $table->integer('menge')->nullable();
-            $table->string('lieferant');
+            $table->unsignedBigInteger('lieferant_id');
             $table->decimal('preis', 8, 2)->nullable();
             $table->string('entladung');
             $table->date('ankunft');
@@ -31,6 +31,10 @@ class CreateWeTable extends Migration
 
             $table->foreign('lkw_id')
                     ->references('id')->on('lkws')
+                    ->onDelete('SET NULL');
+
+            $table->foreign('lieferant_id')
+                    ->references('id')->on('lieferants')
                     ->onDelete('SET NULL');
         });
     }

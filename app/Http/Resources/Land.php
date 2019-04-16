@@ -16,7 +16,8 @@ class Land extends JsonResource
     {
 
         return [
-            'name' => $this->name
+            'land_id' => $this->id,
+            'land_name' => $this->name
         ];
 
     }

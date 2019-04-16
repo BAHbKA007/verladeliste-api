@@ -10,4 +10,10 @@ class We extends Model
     {
         return $this->belongsTo('App\Lkw');
     }
+
+    public function lieferant()
+    {
+        return $this->hasOne('App\Lieferant');
+    }
+
 }
