@@ -10,4 +10,9 @@ class Lieferant extends Model
     {
         return $this->belongsTo('App\Land');
     }
+
+    public function we()
+    {
+        return $this->belongsTo('We\Land');
+    }
 }

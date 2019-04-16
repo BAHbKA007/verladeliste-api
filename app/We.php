@@ -11,9 +11,8 @@ class We extends Model
         return $this->belongsTo('App\Lkw');
     }
 
-    public function lieferant()
+    public function liferant()
     {
-        return $this->hasOne('App\Lieferant');
+        return $this->hasMany('App\lieferant');
     }
-
 }

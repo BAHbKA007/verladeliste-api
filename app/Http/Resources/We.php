@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Resources;
+use App\Lieferant;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -20,7 +21,10 @@ class We extends JsonResource
             'gebinde' => $this->gebinde,
             'paletten' => $this->paletten,
             'menge' => $this->menge,
-            'lieferant' => $this->lieferant,
+            'lieferant' => [
+                'id' => $this->lieferant_id,
+                'name' => Lieferant::select('lieferants.name')->where('id', $this->lieferant_id)->pluck('name')[0]
+            ],
             'preis' => $this->preis,
             'entladung' => $this->entladung,
             'ankunft' => $this->ankunft,

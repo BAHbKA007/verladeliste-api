@@ -16,7 +16,8 @@ class WeController extends Controller
      */
     public function index()
     {
-        return WeResource::collection(We::orderBy('ankunft', 'DESC')->get());
+        //return WeResource::collection(We::orderBy('ankunft', 'DESC')->get());
+        return WeResource::collection(We::leftJoin('lieferants', 'lieferants.id', '=', 'wes.lieferant_id')->select('wes.*', 'lieferants.id as lieferantId', 'lieferants.name as lieferantName')->get());
     }
 
 
@@ -38,7 +39,7 @@ class WeController extends Controller
         }
 
         if ($request->has('lieferant')) {
-            $We->lieferant = $request->input('lieferant');
+            $We->lieferant_id = $request->input('lieferant');
         }        
         
         if ($request->has('paletten')) {
@@ -68,16 +69,15 @@ class WeController extends Controller
             $We->ls_nr = $request->input('ls_nr');
         }
         
-        
-
         if ($We->save()) {
             return new WeResource($We);
         }
+
     }
 
     public function show($id)
     {
-        return WeResource::collection(We::whereNull('lkw_id')->get());
+        return WeResource::collection(We::leftJoin('lieferants', 'lieferants.id', '=', 'wes.lieferant_id')->select('wes.*', 'lieferants.id as lieferantId', 'lieferants.name as lieferantName')->whereNull('lkw_id')->get());
     }
 
 
