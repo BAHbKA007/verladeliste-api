@@ -17,7 +17,7 @@ class WeController extends Controller
     public function index()
     {
         //return WeResource::collection(We::orderBy('ankunft', 'DESC')->get());
-        return WeResource::collection(We::leftJoin('lieferants', 'lieferants.id', '=', 'wes.lieferant_id')->select('wes.*', 'lieferants.id as lieferantId', 'lieferants.name as lieferantName')->get());
+        return WeResource::collection(We::all());
     }
 
 
@@ -27,11 +27,11 @@ class WeController extends Controller
 
 
         if ($request->has('produkt')) {
-            $We->produkt = $request->input('produkt');
+            $We->artikel_id = $request->input('produkt');
         }
 
         if ($request->has('gebinde')) {
-            $We->gebinde = $request->input('gebinde');
+            $We->gebinde_id = $request->input('gebinde');
         }
 
         if ($request->has('menge')) {
@@ -58,7 +58,7 @@ class WeController extends Controller
         }
         
         if ($request->has('entladung')) {
-            $We->entladung = $request->input('entladung');
+            $We->entladung_id = $request->input('entladung');
         } 
 
         if ($request->has('we_nr')) {
@@ -75,15 +75,24 @@ class WeController extends Controller
 
     }
 
-    public function show($id)
-    {
-        return WeResource::collection(We::leftJoin('lieferants', 'lieferants.id', '=', 'wes.lieferant_id')->select('wes.*', 'lieferants.id as lieferantId', 'lieferants.name as lieferantName')->whereNull('lkw_id')->get());
-    }
+    // public function show($id)
+    // {
+    //     return WeResource::collection(We::whereNull('lkw_id')->get());
+    // }
 
 
-    public function where_land(Request $request)
+    public function where(Request $request)
     {
-        return WeResource::collection(We::whereNull('lkw_id')->whereIn('id', $request)->paginate(100));
+        $land_array = $request->has('land_array') ? $request->input('land_array') : [];
+
+        return WeResource::collection(
+            We::whereNull('lkw_id')
+            ->leftJoin('lieferants', 'lieferants.id', '=', 'wes.lieferant_id')
+            ->select('wes.*', 'lieferants.id as lieferant_id', 'lieferants.name as lieferant_name')
+            ->whereIn('lieferants.land_id', $land_array)
+            ->whereNull('lkw_id')
+            ->get()
+        );
     }
 
     /**

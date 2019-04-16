@@ -2,6 +2,9 @@
 
 namespace App\Http\Resources;
 use App\Lieferant;
+use App\Artikel;
+use App\Gebinde;
+use App\Entladung;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -17,16 +20,13 @@ class We extends JsonResource
     {
         return [
             'id' => $this->id,
-            'produkt' => $this->produkt,
-            'gebinde' => $this->gebinde,
+            'produkt' => Artikel::find($this->artikel_id),
+            'gebinde' => Gebinde::find($this->gebinde_id),
             'paletten' => $this->paletten,
             'menge' => $this->menge,
-            'lieferant' => [
-                'id' => $this->lieferant_id,
-                'name' => Lieferant::select('lieferants.name')->where('id', $this->lieferant_id)->pluck('name')[0]
-            ],
+            'lieferant' => Lieferant::find($this->lieferant_id),
             'preis' => $this->preis,
-            'entladung' => $this->entladung,
+            'entladung' => Entladung::find($this->entladung_id),
             'ankunft' => $this->ankunft,
             'verladung' => $this->verladung,
             'lkw_id' => $this->lkw_id,

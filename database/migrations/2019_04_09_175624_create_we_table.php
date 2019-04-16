@@ -15,13 +15,13 @@ class CreateWeTable extends Migration
     {
         Schema::create('wes', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('produkt');
-            $table->string('gebinde')->nullable();
+            $table->unsignedBigInteger('artikel_id')->nullable();
+            $table->unsignedBigInteger('gebinde_id')->nullable();
             $table->decimal('paletten', 8, 2)->nullable();
             $table->integer('menge')->nullable();
-            $table->unsignedBigInteger('lieferant_id');
+            $table->unsignedBigInteger('lieferant_id')->nullable();
             $table->decimal('preis', 8, 2)->nullable();
-            $table->string('entladung');
+            $table->unsignedBigInteger('entladung_id')->nullable();
             $table->date('ankunft');
             $table->date('verladung');
             $table->unsignedBigInteger('lkw_id')->nullable();
@@ -36,6 +36,18 @@ class CreateWeTable extends Migration
             $table->foreign('lieferant_id')
                     ->references('id')->on('lieferants')
                     ->onDelete('SET NULL');
+
+            $table->foreign('gebinde_id')
+                    ->references('id')->on('gebindes')
+                    ->onDelete('SET NULL'); 
+                    
+            $table->foreign('artikel_id')
+                    ->references('id')->on('artikels')
+                    ->onDelete('SET NULL'); 
+
+            $table->foreign('entladung_id')
+                    ->references('id')->on('entladungs')
+                    ->onDelete('SET NULL'); 
         });
     }
 

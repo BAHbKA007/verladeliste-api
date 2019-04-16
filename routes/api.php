@@ -63,6 +63,8 @@ Route::put('we', 'WeController@store');
 Route::delete('we/{id}', 'WeController@destroy');
 // We Land
 Route::post('we/where/land', 'WeController@where_land');
+// We WHERE
+Route::post('we/where', 'WeController@where');
 
 // Lieferant Liste
 Route::get('lieferant', 'LieferantController@index');
@@ -88,5 +90,3 @@ Route::post('lkw', 'LkwController@store');
 Route::put('lkw', 'LkwController@lkw_edit');
 // Lösche LKW
 Route::delete('lkw/{id}', 'LkwController@destroy');
-// LKW WHERE
-Route::post('lkw/where', 'LkwController@where');

@@ -13,6 +13,21 @@ class We extends Model
 
     public function liferant()
     {
-        return $this->hasMany('App\lieferant');
+        return $this->hasMany('App\Lieferant');
+    }
+
+    public function artikel()
+    {
+        return $this->hasMany('App\Artikel');
+    }
+
+    public function gebinde()
+    {
+        return $this->hasMany('App\Gebinde');
+    }
+
+    public function entladung()
+    {
+        return $this->hasMany('App\Entladung');
     }
 }

@@ -14,15 +14,14 @@ class Lkw extends JsonResource
      */
     public function toArray($request)
     {
-        // return [
-        //     'id' => $this->id,
-        //     'lkw' => $this->lkw,
-        //     'frachtkosten' => $this->frachtkosten,
-        //     'ankunft' => $this->ankunft,
-        //     'wes' => We::collection($this->we),
-        //     'spedition' => $this->spedition,
-        //     'kommentar' => $this->kommentar
-        // ];
-        return We::collection($this->we);
+        return [
+            'id' => $this->id,
+            'lkw' => $this->lkw,
+            'frachtkosten' => $this->frachtkosten,
+            'ankunft' => $this->ankunft,
+            'wes' => We::collection($this->we),
+            'spedition' => $this->spedition,
+            'kommentar' => $this->kommentar
+        ];
     }
 }

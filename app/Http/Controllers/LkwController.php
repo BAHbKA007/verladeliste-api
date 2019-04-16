@@ -36,7 +36,7 @@ class LkwController extends Controller
     
             $req = $request->all();
     
-            foreach ($req as $key ) {
+            foreach ( $req as $key ) {
                 $We = We::findOrFail($key);
                 $We->lkw_id = $Lkw->id;
                 $We->save();

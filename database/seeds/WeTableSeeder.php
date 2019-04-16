@@ -11,10 +11,8 @@ class WeTableSeeder extends Seeder
      */
     public function run()
     {
-        //path to sql file
-        $sql = base_path('database/seeds/wes.sql');
+        // $sql = base_path('database/seeds/wes.sql');
 
-        //collect contents and pass to DB::unprepared
-        DB::unprepared(file_get_contents($sql));
+        // DB::unprepared(file_get_contents($sql));
     }
 }
