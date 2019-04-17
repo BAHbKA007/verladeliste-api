@@ -11,6 +11,10 @@ class EntladungTableSeeder extends Seeder
      */
     public function run()
     {
-        //
+        //path to sql file
+        $sql = base_path('database/seeds/entladung.sql');
+
+        //collect contents and pass to DB::unprepared
+        DB::unprepared(file_get_contents($sql));
     }
 }

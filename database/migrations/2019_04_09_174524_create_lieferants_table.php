@@ -17,7 +17,6 @@ class CreateLieferantsTable extends Migration
             $table->bigIncrements('id');
             $table->string('name', 100);
             $table->integer('nummer');
-            $table->string('land', 3)->nullable();
             $table->decimal('rabatt', 4, 2)->nullable()->default(0);
             $table->unsignedBigInteger('land_id')->nullable();
             $table->timestamps();

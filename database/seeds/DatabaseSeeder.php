@@ -15,6 +15,7 @@ class DatabaseSeeder extends Seeder
         $this->call(GebindeTableSeeder::class);
         $this->call(LandsTableSeeder::class);
         $this->call(LieferantsTableSeeder::class);
+        $this->call(EntladungTableSeeder::class);
         $this->call(WeTableSeeder::class);
     }
 }

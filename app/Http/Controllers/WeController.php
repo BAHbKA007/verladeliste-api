@@ -95,6 +95,17 @@ class WeController extends Controller
         );
     }
 
+    public function wherefirst()
+    {
+        return WeResource::collection(
+            We::whereNull('lkw_id')
+            ->leftJoin('lieferants', 'lieferants.id', '=', 'wes.lieferant_id')
+            ->select('wes.*', 'lieferants.id as lieferant_id', 'lieferants.name as lieferant_name')
+            ->whereNull('lkw_id')
+            ->get()
+        );
+    }
+
     /**
      * Remove the specified resource from storage.
      *
