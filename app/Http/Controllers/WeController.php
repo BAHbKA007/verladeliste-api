@@ -16,8 +16,9 @@ class WeController extends Controller
      */
     public function index()
     {
+        $We = We::paginate(500);
+        return WeResource::collection($We);
         //return WeResource::collection(We::orderBy('ankunft', 'DESC')->get());
-        return WeResource::collection(We::all());
     }
 
 
@@ -74,11 +75,6 @@ class WeController extends Controller
         }
 
     }
-
-    // public function show($id)
-    // {
-    //     return WeResource::collection(We::whereNull('lkw_id')->get());
-    // }
 
 
     public function where(Request $request)

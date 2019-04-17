@@ -61,10 +61,10 @@ Route::post('we', 'WeController@store');
 Route::put('we', 'WeController@store');
 // Lösche We
 Route::delete('we/{id}', 'WeController@destroy');
-// We Land
-Route::post('we/where/land', 'WeController@where_land');
 // We WHERE
 Route::post('we/where', 'WeController@where');
+// We WHERE first ohne länderbeschränkung
+Route::get('we/where/first', 'WeController@wherefirst');
 
 // Lieferant Liste
 Route::get('lieferant', 'LieferantController@index');
