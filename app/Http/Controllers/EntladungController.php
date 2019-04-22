@@ -17,7 +17,7 @@ class EntladungController extends Controller
     public function index()
     {
 
-        return EntladungResource::collection(Entladung::orderBy('name', 'ASC')->get());
+        return EntladungResource::collection(Entladung::orderBy('name', 'ASC')->select('entladungs.id','entladungs.name')->get());
     }
 
 

@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\We;
 use App\Http\Resources\We as WeResource;
 use App\Http\Requests;
+use App\Http\Resources\Kw;
 
 class WeController extends Controller
 {
@@ -16,7 +17,7 @@ class WeController extends Controller
      */
     public function index()
     {
-        $We = We::paginate(500);
+        $We = We::select('wes.id', 'wes.artikel_id', 'wes.gebinde_id', 'wes.paletten', 'wes.menge', 'wes.lieferant_id', 'wes.preis', 'wes.entladung_id', 'wes.ankunft', 'wes.verladung', 'wes.lkw_id', 'wes.we_nr', 'wes.ls_nr')->paginate(500);
         return WeResource::collection($We);
         //return WeResource::collection(We::orderBy('ankunft', 'DESC')->get());
     }
@@ -84,7 +85,7 @@ class WeController extends Controller
         return WeResource::collection(
             We::whereNull('lkw_id')
             ->leftJoin('lieferants', 'lieferants.id', '=', 'wes.lieferant_id')
-            ->select('wes.*', 'lieferants.id as lieferant_id', 'lieferants.name as lieferant_name')
+            ->select('wes.id', 'wes.artikel_id', 'wes.gebinde_id', 'wes.paletten', 'wes.menge', 'wes.lieferant_id', 'wes.preis', 'wes.entladung_id', 'wes.ankunft', 'wes.verladung', 'wes.lkw_id', 'wes.we_nr', 'wes.ls_nr', 'lieferants.id as lieferant_id', 'lieferants.name as lieferant_name')
             ->whereIn('lieferants.land_id', $land_array)
             ->whereNull('lkw_id')
             ->get()
@@ -96,8 +97,18 @@ class WeController extends Controller
         return WeResource::collection(
             We::whereNull('lkw_id')
             ->leftJoin('lieferants', 'lieferants.id', '=', 'wes.lieferant_id')
-            ->select('wes.*', 'lieferants.id as lieferant_id', 'lieferants.name as lieferant_name')
+            ->select('wes.id', 'wes.artikel_id', 'wes.gebinde_id', 'wes.paletten', 'wes.menge', 'wes.lieferant_id', 'wes.preis', 'wes.entladung_id', 'wes.ankunft', 'wes.verladung', 'lieferants.id as lieferant_id', 'lieferants.name as lieferant_name')
             ->whereNull('lkw_id')
+            ->get()
+        );
+    }
+
+    public function kw()
+    {
+        return Kw::collection(
+            We::distinct()
+            ->selectRaw('WEEK(wes.ankunft,1) as kw')
+            ->orderBy('KW', 'desc')
             ->get()
         );
     }

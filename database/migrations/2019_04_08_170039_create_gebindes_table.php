@@ -16,7 +16,6 @@ class CreateGebindesTable extends Migration
         Schema::create('gebindes', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('name');
-            $table->timestamps();
         });
     }
 

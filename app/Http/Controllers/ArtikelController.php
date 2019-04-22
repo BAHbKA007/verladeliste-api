@@ -17,7 +17,7 @@ class ArtikelController extends Controller
     public function index()
     {
 
-        return ArtikelResource::collection(Artikel::get());
+        return ArtikelResource::collection(Artikel::select('artikels.id','artikels.name')->get());
     }
 
 

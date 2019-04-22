@@ -17,7 +17,7 @@ class GebindeController extends Controller
     public function index()
     {
 
-        return GebindeResource::collection(Gebinde::orderBy('name', 'ASC')->get());
+        return GebindeResource::collection(Gebinde::orderBy('name', 'ASC')->select('gebindes.id','gebindes.name')->get());
     }
 
 

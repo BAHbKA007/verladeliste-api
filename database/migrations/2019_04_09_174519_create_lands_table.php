@@ -16,7 +16,6 @@ class CreateLandsTable extends Migration
         Schema::create('lands', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('name', 2);
-            $table->timestamps();
         });
     }
 

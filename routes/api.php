@@ -90,3 +90,6 @@ Route::post('lkw', 'LkwController@store');
 Route::put('lkw', 'LkwController@lkw_edit');
 // Lösche LKW
 Route::delete('lkw/{id}', 'LkwController@destroy');
+
+//KW holen
+Route::get('kw', 'WeController@kw');

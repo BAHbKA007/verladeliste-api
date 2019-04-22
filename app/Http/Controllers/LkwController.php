@@ -12,14 +12,16 @@ class LkwController extends Controller
 {
     public function where(Request $request)
     {
-        $Lkw = Lkw::whereIn('id', $request)->paginate(100);
+        $Lkw = Lkw::paginate(100)
+        ->orderBy('ankunft', 'desc');
         return LkwResource::collection($Lkw);
     }
 
     public function index()
     {
         //return LkwResource::collection(Lkw::get());
-        $Lkw = Lkw::paginate(100);
+        $Lkw = Lkw::orderBy('ankunft', 'asc')
+        ->paginate(100);
         return LkwResource::collection($Lkw);
     }
 

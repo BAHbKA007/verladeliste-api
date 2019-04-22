@@ -17,7 +17,7 @@ class LieferantController extends Controller
      */
     public function index()
     {
-        return LieferantResource::collection(Lieferant::leftJoin('lands', 'lieferants.land_id', '=', 'lands.id')->select('lieferants.*', 'lands.id as landId', 'lands.name as landName')->get());
+        return LieferantResource::collection(Lieferant::leftJoin('lands', 'lieferants.land_id', '=', 'lands.id')->select('lieferants.id', 'lieferants.name', 'lieferants.nummer', 'lieferants.rabatt', 'lieferants.land_id', 'lands.id as landId', 'lands.name as landName')->get());
     }
 
 

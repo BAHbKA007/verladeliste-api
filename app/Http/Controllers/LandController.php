@@ -17,6 +17,6 @@ class LandController extends Controller
     public function index()
     {
 
-        return LandResource::collection(Land::orderBy('name', 'ASC')->get());
+        return LandResource::collection(Land::orderBy('name', 'ASC')->select('lands.id','lands.name')->get());
     }
 }

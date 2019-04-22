@@ -17,10 +17,9 @@ class CreateLkwsTable extends Migration
             $table->bigIncrements('id');
             $table->string('lkw')->nullable();
             $table->decimal('frachtkosten', 8, 2)->nullable();
-            $table->string('spedition')->nullable();
             $table->date('ankunft')->nullable();
+            $table->string('spedition')->nullable();
             $table->string('kommentar')->nullable();
-            $table->timestamps();
         });
     }
 
