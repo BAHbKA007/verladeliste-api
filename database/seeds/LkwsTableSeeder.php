@@ -2,7 +2,7 @@
 
 use Illuminate\Database\Seeder;
 
-class WeTableSeeder extends Seeder
+class LkwsTableSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -11,12 +11,10 @@ class WeTableSeeder extends Seeder
      */
     public function run()
     {
-        $sql = base_path('database/seeds/wes.sql');
+        //path to sql file
+        $sql = base_path('database/seeds/lkws.sql');
 
-        DB::unprepared(file_get_contents($sql));
-
-        $sql = base_path('database/seeds/wes.1.sql');
-
+        //collect contents and pass to DB::unprepared
         DB::unprepared(file_get_contents($sql));
     }
 }
