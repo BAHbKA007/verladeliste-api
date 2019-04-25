@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 /*
 |--------------------------------------------------------------------------
@@ -65,6 +66,10 @@ Route::delete('we/{id}', 'WeController@destroy');
 Route::post('we/where', 'WeController@where');
 // We WHERE first ohne länderbeschränkung
 Route::get('we/where/first', 'WeController@wherefirst');
+// We Split
+Route::post('we/split', 'WeController@split');
+// We KW
+Route::post('kw', 'WeController@get_we_kw');
 
 // Lieferant Liste
 Route::get('lieferant', 'LieferantController@index');
@@ -90,6 +95,8 @@ Route::post('lkw', 'LkwController@store');
 Route::put('lkw', 'LkwController@lkw_edit');
 // Lösche LKW
 Route::delete('lkw/{id}', 'LkwController@destroy');
+// LKW für KW
+Route::post('lkw/kw', 'LkwController@get_lkw_kw');
 
 //KW holen
 Route::get('kw', 'WeController@kw');

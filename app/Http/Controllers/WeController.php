@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use App\We;
 use App\Http\Resources\We as WeResource;
@@ -17,9 +18,24 @@ class WeController extends Controller
      */
     public function index()
     {
-        $We = We::select('wes.id', 'wes.artikel_id', 'wes.gebinde_id', 'wes.paletten', 'wes.menge', 'wes.lieferant_id', 'wes.preis', 'wes.entladung_id', 'wes.ankunft', 'wes.verladung', 'wes.lkw_id', 'wes.we_nr', 'wes.ls_nr')->paginate(500);
+        //$We = We::selectRaw('WEEK(wes.ankunft,1) as kw', 'wes.id', 'wes.artikel_id', 'wes.gebinde_id', 'wes.paletten', 'wes.menge', 'wes.lieferant_id', 'wes.preis', 'wes.entladung_id', 'wes.ankunft', 'wes.verladung', 'wes.lkw_id', 'wes.we_nr', 'wes.ls_nr')
+        $We = We::raw('SELECT WEEK(wes.ankunft,1) AS KW, wes.id, wes.artikel_id, wes.gebinde_id, wes.paletten, wes.menge, wes.lieferant_id, wes.preis, wes.entladung_id, wes.ankunft, wes.verladung, wes.lkw_id, wes.we_nr, wes.ls_nr FROM wes HAVING KW = 1')
+        ->paginate(500);
         return WeResource::collection($We);
         //return WeResource::collection(We::orderBy('ankunft', 'DESC')->get());
+    }
+
+    public function get_we_kw(Request $request)
+    {
+        //$We = We::selectRaw('WEEK(wes.ankunft,1) as kw', 'wes.id', 'wes.artikel_id', 'wes.gebinde_id', 'wes.paletten', 'wes.menge', 'wes.lieferant_id', 'wes.preis', 'wes.entladung_id', 'wes.ankunft', 'wes.verladung', 'wes.lkw_id', 'wes.we_nr', 'wes.ls_nr')
+        // $We = DB::raw('SELECT WEEK(wes.ankunft,1) AS KW, wes.id, wes.artikel_id, wes.gebinde_id, wes.paletten, wes.menge, wes.lieferant_id, wes.preis, wes.entladung_id, wes.ankunft, wes.verladung, wes.lkw_id, wes.we_nr, wes.ls_nr FROM wes HAVING KW = 1')
+        $We = DB::table('wes')
+            ->select('wes.id', 'wes.artikel_id', 'wes.gebinde_id', 'wes.paletten', 'wes.menge', 'wes.lieferant_id', 'wes.preis', 'wes.entladung_id', 'wes.ankunft', 'wes.verladung', 'wes.lkw_id', 'wes.we_nr', 'wes.ls_nr', DB::raw('WEEK(wes.ankunft,1) AS KW'))
+            ->havingRaw('KW = ?',[$request->kw])
+            ->get();
+        return WeResource::collection($We);
+        //return WeResource::collection(We::orderBy('ankunft', 'DESC')->get());
+        //return $We;
     }
 
 
@@ -101,6 +117,39 @@ class WeController extends Controller
             ->whereNull('lkw_id')
             ->get()
         );
+    }
+
+    public function split(Request $request)
+    {
+        DB::beginTransaction();
+        $We_u = We::findOrFail($request->id_edit);
+
+
+        // update
+        $We_u->menge = $request->input('menge_edit');
+        $We_u->paletten = $request->input('paletten_edit');
+
+        // create
+        $We_c = new We;
+
+        $We_c->artikel_id = $request->input('produkt');
+        $We_c->gebinde_id = $request->input('gebinde');
+        $We_c->menge = $request->input('menge');
+        $We_c->lieferant_id = $request->input('lieferant');
+        $We_c->paletten = $request->input('paletten');
+        $We_c->preis = $request->input('preis');
+        $We_c->verladung = $request->input('verladung');
+        $We_c->ankunft = $request->input('ankunft');
+        $We_c->entladung_id = $request->input('entladung');
+
+        if (!$We_u->save() || !$We_c->save())
+        {
+            DB::rollBack();
+            return 'Rollback';
+        }
+
+        DB::commit();
+        return 'save';
     }
 
     public function kw()
