@@ -24,6 +24,7 @@ class LkwController extends Controller
         // $We = DB::raw('SELECT WEEK(wes.ankunft,1) AS KW, wes.id, wes.artikel_id, wes.gebinde_id, wes.paletten, wes.menge, wes.lieferant_id, wes.preis, wes.entladung_id, wes.ankunft, wes.verladung, wes.lkw_id, wes.we_nr, wes.ls_nr FROM wes HAVING KW = 1')
         $Lkw = Lkw::select('lkws.*', DB::raw('WEEK(lkws.ankunft,1) AS KW'))
             ->havingRaw('KW = ?',[$request->kw])
+            ->orderBy('ankunft', 'desc')
             ->get();
         return LkwResource::collection($Lkw);
         //return WeResource::collection(We::orderBy('ankunft', 'DESC')->get());
