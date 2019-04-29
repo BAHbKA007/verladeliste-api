@@ -22,7 +22,7 @@ class LkwController extends Controller
     {
         //$We = We::selectRaw('WEEK(wes.ankunft,1) as kw', 'wes.id', 'wes.artikel_id', 'wes.gebinde_id', 'wes.paletten', 'wes.menge', 'wes.lieferant_id', 'wes.preis', 'wes.entladung_id', 'wes.ankunft', 'wes.verladung', 'wes.lkw_id', 'wes.we_nr', 'wes.ls_nr')
         // $We = DB::raw('SELECT WEEK(wes.ankunft,1) AS KW, wes.id, wes.artikel_id, wes.gebinde_id, wes.paletten, wes.menge, wes.lieferant_id, wes.preis, wes.entladung_id, wes.ankunft, wes.verladung, wes.lkw_id, wes.we_nr, wes.ls_nr FROM wes HAVING KW = 1')
-        $Lkw = Lkw::select('lkws.*', DB::raw('WEEK(lkws.ankunft,1) AS KW'))
+        $Lkw = Lkw::select('lkws.*', DB::raw("CONCAT(WEEK(lkws.ankunft,1), '/',YEAR(lkws.ankunft)) AS KW, WEEK(lkws.ankunft,1) as kw_order"))
             ->havingRaw('KW = ?',[$request->kw])
             ->orderBy('ankunft', 'desc')
             ->get();

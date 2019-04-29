@@ -30,7 +30,7 @@ class WeController extends Controller
         //$We = We::selectRaw('WEEK(wes.ankunft,1) as kw', 'wes.id', 'wes.artikel_id', 'wes.gebinde_id', 'wes.paletten', 'wes.menge', 'wes.lieferant_id', 'wes.preis', 'wes.entladung_id', 'wes.ankunft', 'wes.verladung', 'wes.lkw_id', 'wes.we_nr', 'wes.ls_nr')
         // $We = DB::raw('SELECT WEEK(wes.ankunft,1) AS KW, wes.id, wes.artikel_id, wes.gebinde_id, wes.paletten, wes.menge, wes.lieferant_id, wes.preis, wes.entladung_id, wes.ankunft, wes.verladung, wes.lkw_id, wes.we_nr, wes.ls_nr FROM wes HAVING KW = 1')
         $We = DB::table('wes')
-            ->select('wes.id', 'wes.artikel_id', 'wes.gebinde_id', 'wes.paletten', 'wes.menge', 'wes.lieferant_id', 'wes.preis', 'wes.entladung_id', 'wes.ankunft', 'wes.verladung', 'wes.lkw_id', 'wes.we_nr', 'wes.ls_nr', DB::raw('WEEK(wes.ankunft,1) AS KW'))
+            ->select('wes.id', 'wes.artikel_id', 'wes.gebinde_id', 'wes.paletten', 'wes.menge', 'wes.lieferant_id', 'wes.preis', 'wes.entladung_id', 'wes.ankunft', 'wes.verladung', 'wes.lkw_id', 'wes.we_nr', 'wes.ls_nr', DB::raw("CONCAT(WEEK(wes.ankunft,1), '/',YEAR(wes.ankunft)) as KW, WEEK(wes.ankunft,1) as kw_order"))
             ->havingRaw('KW = ?',[$request->kw])
             ->get();
         return WeResource::collection($We);
@@ -156,8 +156,9 @@ class WeController extends Controller
     {
         return Kw::collection(
             We::distinct()
-            ->selectRaw('WEEK(wes.ankunft,1) as kw')
-            ->orderBy('KW', 'desc')
+            ->selectRaw("CONCAT(WEEK(wes.ankunft,1), '/',YEAR(wes.ankunft)) as kw, WEEK(wes.ankunft,1) as kw_order, YEAR(wes.ankunft) as Year")
+            ->orderBy('Year', 'desc')
+            ->orderBy('kw_order', 'desc')
             ->get()
         );
     }
