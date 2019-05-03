@@ -91,6 +91,8 @@ Route::get('lkw', 'LkwController@index');
 Route::get('lkw/{id}', 'LkwController@show');
 // Neuen LKW anlegen
 Route::post('lkw', 'LkwController@store');
+// LKWs durchsuchen
+Route::post('lkw_suchen', 'LkwController@lkw_suchen');
 // Update LKW
 Route::put('lkw', 'LkwController@lkw_edit');
 // Lösche LKW

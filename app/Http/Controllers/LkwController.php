@@ -11,10 +11,11 @@ use Illuminate\Support\Facades\DB;
 
 class LkwController extends Controller
 {
-    public function where(Request $request)
+    public function lkw_suchen(Request $request)
     {
-        $Lkw = Lkw::get()
-        ->orderBy('ankunft', 'desc');
+        $Lkw = Lkw::where('id','5009')
+        ->distinct()
+        ->get();
         return LkwResource::collection($Lkw);
     }
 
