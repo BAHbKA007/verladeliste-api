@@ -9,12 +9,32 @@ use App\Http\Resources\Lkw as LkwResource;
 use App\Http\Requests;
 use Illuminate\Support\Facades\DB;
 
+
 class LkwController extends Controller
 {
+
     public function lkw_suchen(Request $request)
     {
-        $Lkw = Lkw::where('id','5009')
-        ->distinct()
+        $suche = str_replace(' ', '%', $request->lkw_suche);
+        // $suche = $request->lkw_suche;
+        $Lkw = Lkw::select('lkws.*', DB::raw("CONCAT(WEEK(lkws.ankunft,1), '/',YEAR(lkws.ankunft)) AS KW"))->distinct()
+        ->Join('wes', 'lkws.id', '=', 'wes.lkw_id')
+        ->Join('artikels', 'artikels.id', '=', 'wes.artikel_id')
+        ->Join('lieferants', 'lieferants.id', '=', 'wes.lieferant_id')
+        ->Join('gebindes', 'gebindes.id', '=', 'wes.gebinde_id')
+        ->Join('entladungs', 'entladungs.id', '=', 'wes.entladung_id')
+        ->whereRaw("CONCAT(WEEK(lkws.ankunft,1), '/',YEAR(lkws.ankunft)) = ?",[$request->kw])
+        ->where(function ($query) use ($suche) {
+            $query->where('lkws.lkw','Like', '%'.$suche.'%')
+            ->orWhere('lkws.ankunft','Like', '%'.$suche.'%')
+            ->orWhere('lkws.spedition','Like', '%'.$suche.'%')
+            ->orWhere('lkws.kommentar','Like', '%'.$suche.'%')
+            ->orWhere('artikels.name','Like', '%'.$suche.'%')
+            ->orWhere('lieferants.name','Like', '%'.$suche.'%')
+            ->orWhere('lieferants.nummer','Like', '%'.$suche.'%')
+            ->orWhere('gebindes.name','Like', '%'.$suche.'%')
+            ->orWhere('entladungs.name','Like', '%'.$suche.'%');
+        })
         ->get();
         return LkwResource::collection($Lkw);
     }
