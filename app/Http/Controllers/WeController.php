@@ -31,7 +31,7 @@ class WeController extends Controller
         // $We = DB::raw('SELECT WEEK(wes.ankunft,1) AS KW, wes.id, wes.artikel_id, wes.gebinde_id, wes.paletten, wes.menge, wes.lieferant_id, wes.preis, wes.entladung_id, wes.ankunft, wes.verladung, wes.lkw_id, wes.we_nr, wes.ls_nr FROM wes HAVING KW = 1')
         $We = DB::table('wes')
             ->select('wes.id', 'wes.artikel_id', 'wes.gebinde_id', 'wes.paletten', 'wes.menge', 'wes.lieferant_id', 'wes.preis', 'wes.entladung_id', 'wes.ankunft', 'wes.verladung', 'wes.lkw_id', 'wes.we_nr', 'wes.ls_nr', DB::raw("CONCAT(WEEK(wes.ankunft,1), '/',YEAR(wes.ankunft)) as KW, WEEK(wes.ankunft,1) as kw_order"))
-            ->havingRaw('KW = ?',[$request->kw])
+            ->havingRaw("CONCAT(WEEK(wes.ankunft,1), '/',YEAR(wes.ankunft)) = ?",[$request->kw])
             ->get();
         return WeResource::collection($We);
         //return WeResource::collection(We::orderBy('ankunft', 'DESC')->get());
